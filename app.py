@@ -115,7 +115,7 @@ def add_todo():
         
     try:
         data = request.get_json()
-    except Exception as e:
+    except Exception:
         raise InvalidAPIUsage("Invalid JSON provided!")
 
     return app.todo.create_task(data.get('title'), data.get('note', ''))
