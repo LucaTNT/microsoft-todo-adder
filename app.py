@@ -110,6 +110,9 @@ def auth_ms_account_callback():
 
 @app.route('/api/v1/todo', methods=["POST"])
 def add_todo():
+    if request.headers.get('Authorization') != app.config.get('AUTH_SECRET'):
+        raise InvalidAPIUsage('Unauthorized', 401)
+        
     try:
         data = request.get_json()
     except Exception as e:
