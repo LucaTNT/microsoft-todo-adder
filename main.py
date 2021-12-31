@@ -16,13 +16,13 @@ def create_app():
         app.todo = microsoft_todo_adder.microsoft_todo_adder(app.config)
     except microsoft_todo_adder.MissingTokenFile:
         print('Missing token file')
-        app.notifier.send_notification(f"microsoft-todo-adder: missing token file, please authenticate at: https://sys.easypodcast.it/microsoft-todo-adder/authmsaccount/{app.config.get('AUTH_SECRET')}")
-    
-    import logging
-    import sys
-    log = logging.getLogger('requests_oauthlib')
-    log.addHandler(logging.StreamHandler(sys.stdout))
-    log.setLevel(logging.DEBUG)
+        app.notifier.send_notification(f"microsoft-todo-adder: missing token file, please authenticate at: https://your-site.com/microsoft-todo-adder/authmsaccount/{app.config.get('AUTH_SECRET')}")
+    if os.environ.get('OAUTHLIB_DEBUG'):
+        import logging
+        import sys
+        log = logging.getLogger('requests_oauthlib')
+        log.addHandler(logging.StreamHandler(sys.stdout))
+        log.setLevel(logging.DEBUG)
     return app
 
 app = create_app()
